@@ -19,6 +19,7 @@ export default class Map extends cc.Component {
         //players对象层
         var players = this.tiledMap.getObjectGroup('players');
         this.player = this.node.getChildByName('player');
+        this.cocos = this.node.getChildByName('cocos');
         //startPoint和endPoint对象
         var startPoint = players.getObject('begin');
         var endPoint = players.getObject('end');
@@ -31,6 +32,7 @@ export default class Map extends cc.Component {
         //出生Tile和结束Tile
         this.playerTile = this.startTile = this.getTilePos(startPos);
         this.endTile = this.getTilePos(endPos);
+        this.cocos.setPosition(this.decorates.getPositionAt(this.endTile));
         //更新player位置
         this.updatePlayerPos();
     }
