@@ -45,11 +45,6 @@ export default class Map extends cc.Component {
         return cc.v2(x, y);
     }
 
-    updatePlayerPos() {
-        var pos = this.decorates.getPositionAt(this.playerTile);
-        this.player.setPosition(pos);
-    }
-
     addKeyBoardListener(){
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
     }
@@ -98,7 +93,7 @@ export default class Map extends cc.Component {
 
         this.tryCatchStar(newTile);
 
-        console.log('newTile='+newTile);
+        //console.log('newTile='+newTile);
         this.playerTile = newTile;
         this.updatePlayerPos();
 
@@ -114,6 +109,11 @@ export default class Map extends cc.Component {
             //this.golds.removeTileAt(newTile);
             this.golds.setTileGIDAt(0, newTile);
         }
+    }
+
+    updatePlayerPos() {
+        var pos = this.decorates.getPositionAt(this.playerTile);
+        this.player.setPosition(pos);
     }
 
     start () {
