@@ -1,0 +1,31 @@
+{
+  "ver": "2.2.0",
+  "uuid": "acde0cc1-86e1-44aa-b6be-96dbfd8e65ef",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "subMetas": {
+    "wallpaper17_1": {
+      "ver": "1.0.3",
+      "uuid": "3dc6dccd-3ac5-46b3-b485-dec6e24afa9b",
+      "rawTextureUuid": "acde0cc1-86e1-44aa-b6be-96dbfd8e65ef",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": -13,
+      "offsetY": -21.5,
+      "trimX": 0,
+      "trimY": 43,
+      "width": 54,
+      "height": 197,
+      "rawWidth": 80,
+      "rawHeight": 240,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

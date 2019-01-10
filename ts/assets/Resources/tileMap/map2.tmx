@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.6" orientation="isometric" renderorder="right-down" width="8" height="8" tilewidth="80" tileheight="42" infinite="0" nextobjectid="3">
+ <tileset firstgid="1" name="cocos" tilewidth="88" tileheight="88" tilecount="1" columns="1">
+  <image source="cocos.png" width="88" height="88"/>
+ </tileset>
+ <tileset firstgid="2" name="floor" tilewidth="80" tileheight="42" tilecount="3" columns="3">
+  <image source="floor.png" width="240" height="42"/>
+ </tileset>
+ <layer name="base" width="8" height="8">
+  <data encoding="csv">
+2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2
+</data>
+ </layer>
+ <objectgroup name="players">
+  <object id="1" name="begin" gid="1" x="289.525" y="330.475" width="88" height="88"/>
+  <object id="2" name="end" gid="1" x="79.6" y="96.4" width="88" height="88"/>
+ </objectgroup>
+</map>
