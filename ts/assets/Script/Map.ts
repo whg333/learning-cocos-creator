@@ -11,36 +11,6 @@ export default class Map extends cc.Component {
         this.addKeyBoardListener();
     }
 
-    addKeyBoardListener(){
-        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
-    }
-
-    onKeyDown (event) {
-        var newTile = cc.v2(this.playerTile.x, this.playerTile.y);
-        var macro = cc.macro;
-        switch(event.keyCode) {
-            case macro.KEY.w:
-            case cc.macro.KEY.up:
-                newTile.y -= 1;
-                break;
-            case macro.KEY.s:
-            case cc.macro.KEY.down:
-                newTile.y += 1;
-                break;
-            case macro.KEY.a:
-            case macro.KEY.left:
-                newTile.x -= 1;
-                break;
-            case macro.KEY.d:
-            case macro.KEY.right:
-                newTile.x += 1;
-                break;
-            default:
-                return;
-        }
-        this.tryMoveToNewTile(newTile);
-    }
-
     loadMap () {
         //初始化地图位置
         //this.node.setPosition(cc.visibleRect.bottomLeft);
@@ -78,6 +48,36 @@ export default class Map extends cc.Component {
     updatePlayerPos() {
         var pos = this.decorates.getPositionAt(this.playerTile);
         this.player.setPosition(pos);
+    }
+
+    addKeyBoardListener(){
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+    }
+
+    onKeyDown (event) {
+        var newTile = cc.v2(this.playerTile.x, this.playerTile.y);
+        var macro = cc.macro;
+        switch(event.keyCode) {
+            case macro.KEY.w:
+            case cc.macro.KEY.up:
+                newTile.y -= 1;
+                break;
+            case macro.KEY.s:
+            case cc.macro.KEY.down:
+                newTile.y += 1;
+                break;
+            case macro.KEY.a:
+            case macro.KEY.left:
+                newTile.x -= 1;
+                break;
+            case macro.KEY.d:
+            case macro.KEY.right:
+                newTile.x += 1;
+                break;
+            default:
+                return;
+        }
+        this.tryMoveToNewTile(newTile);
     }
 
     tryMoveToNewTile(newTile) {
