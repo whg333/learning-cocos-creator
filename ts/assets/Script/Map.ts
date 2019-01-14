@@ -25,20 +25,25 @@ export default class Map extends cc.Component {
         var endPoint = players.getObject('end');
         //像素坐标
         var startPos = cc.v2(startPoint.x, startPoint.y);
+        console.log('star pos = '+startPos);
         var endPos = cc.v2(endPoint.x, endPoint.y);
+        console.log('end pos = '+endPos);
         //障碍物图层和星星图层
         this.decorates = this.tiledMap.getLayer('decorates');
         this.golds = this.tiledMap.getLayer('golds');
         //出生Tile和结束Tile
         this.playerTile = this.startTile = this.getTilePos(startPos);
         this.endTile = this.getTilePos(endPos);
-        this.cocos.setPosition(this.decorates.getPositionAt(this.endTile));
+        this.tileToPos(startPos);
+        this.tileToPos(endPos);
+        this.cocos.setPosition(this.tileToPos(this.endTile));
         //更新player位置
         this.updatePlayerPos();
     }
 
     //将像素坐标转化为瓦片坐标
     getTilePos(posInPixel) {
+        console.log('posInPixel=', posInPixel.x, ', ', posInPixel.y);
         var mapSize = this.node.getContentSize();
         var tileSize = this.tiledMap.getTileSize();
         var x = Math.floor(posInPixel.x / tileSize.width);
@@ -47,8 +52,24 @@ export default class Map extends cc.Component {
         return cc.v2(x, y);
     }
 
+    tileToPos(objPos){
+        let mapSize = this.node.getContentSize();
+        let tileSize = this.tiledMap.getTileSize();
+        let y = mapSize.height - 2 - ((2 * objPos.y)/tileSize.height);
+        let x = objPos.x/tileSize.width - (y % 2)/2.0;
+        return cc.v2(x, y);
+    }
+
     addKeyBoardListener(){
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+        this.node.parent.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
+    }
+
+    onMouseDown(event){
+        console.log('mouse down ('+ event._x+', '+event._y+')');
+        let x = Math.round(event._x);
+        let y = Math.round(event._y);
+        console.log(this.getTilePos({x:event._x, y:event._y}));
     }
 
     onKeyDown (event) {
@@ -115,6 +136,7 @@ export default class Map extends cc.Component {
 
     updatePlayerPos() {
         var pos = this.decorates.getPositionAt(this.playerTile);
+        console.log('update pos='+pos);
         this.player.setPosition(pos);
     }
 

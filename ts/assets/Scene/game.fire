@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.8997058263563636,
-      "y": 0.8997058263563636,
+      "x": 0.541650390625,
+      "y": 0.541650390625,
       "z": 1
     },
     "_quat": {
@@ -701,19 +701,19 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": -0.2,
+      "y": -0.2
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 108,
-      "y": 63,
+      "x": -4,
+      "y": 1,
       "z": 0
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.69,
-      "y": 0.69,
+      "x": 0.65,
+      "y": 0.63,
       "z": 1
     },
     "_rotationX": 0,
@@ -729,7 +729,7 @@
     "_skewY": 0,
     "_zIndex": 0,
     "groupIndex": 0,
-    "_id": "f8q3DdEnVAP6m6uVBMGFUK"
+    "_id": "8aI5Eg2x1O3qILX1Kel2SN"
   },
   {
     "__type__": "cc.Sprite",
@@ -757,7 +757,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "38dOAtKb9F5YmnYfpV/i9h"
+    "_id": "bdfs0w6cVB4oQ1ZMKF2I00"
   },
   {
     "__type__": "cc.TiledMap",
