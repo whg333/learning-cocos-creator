@@ -67,6 +67,10 @@ export default class Map extends cc.Component {
 
     onMouseDown(event){
         console.log('mouse down ('+ event._x+', '+event._y+')');
+        let localtion = event.getLocation();
+        console.log('localtion='+localtion);
+        let startLocation = this.node.convertToNodeSpaceAR(localtion);
+        console.log('startLocation='+startLocation);
         let x = Math.round(event._x);
         let y = Math.round(event._y);
         console.log(this.getTilePos({x:event._x, y:event._y}));
