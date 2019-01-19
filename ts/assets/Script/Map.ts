@@ -43,7 +43,7 @@ export default class Map extends cc.Component {
         this.toGLPos({x:1,y:0});
 
         //更新player位置
-        this.updatePlayerPos();
+        //this.updatePlayerPos();
     }
 
     //将像素坐标转化为瓦片坐标
