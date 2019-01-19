@@ -35,8 +35,13 @@ export default class Map extends cc.Component {
         this.playerTile = this.startTile = this.toMapPos(startPos);
         this.endTile = this.toMapPos(endPos);
         this.cocos.setPosition(this.decorates.getPositionAt(this.endTile));
+
         this.toMapPos({x:26,y:323});
         this.toMapPos({x:332,y:323});
+        this.toGLPos({x:0,y:0});
+        this.toGLPos({x:0,y:1});
+        this.toGLPos({x:1,y:0});
+
         //更新player位置
         this.updatePlayerPos();
     }
@@ -53,11 +58,13 @@ export default class Map extends cc.Component {
     }
 
     //地图坐标转GL
-    toGLPos(MapPosition: { x: number, y: number }): cc.Vec2 {
+    toGLPos(mapPos: { x: number, y: number }): cc.Vec2 {
+        console.log('posInPixel=', mapPos.x, ', ', mapPos.y);
         let mapSize = this.node.getContentSize();
         let tilesize = this.tiledMap.getTileSize();
-        let x: number = mapSize.width / 2 + (MapPosition.x - MapPosition.y) * tilesize.width / 2;
-        let y: number = mapSize.height - (MapPosition.x + MapPosition.y) * tilesize.height / 2;
+        let x: number = mapSize.width / 2 + (mapPos.x - mapPos.y) * tilesize.width / 2;
+        let y: number = mapSize.height - (mapPos.x + mapPos.y) * tilesize.height / 2;
+        console.log('toGLPos=', x, y);
         return cc.v2(x, y);
     }
     //GL转地图坐标
@@ -67,13 +74,13 @@ export default class Map extends cc.Component {
         let tilesize = this.tiledMap.getTileSize();
         let x: number = Math.floor((posInPixel.x - mapSize.width / 2) / tilesize.width + (mapSize.height - posInPixel.y) / tilesize.height);
         let y: number = Math.floor((mapSize.height - posInPixel.y) / tilesize.height - (posInPixel.x - mapSize.width / 2) / tilesize.width);
-        console.log(x, y);
+        console.log('toMapPos=', x, y);
         return cc.v2(x, y);
     }
 
     addKeyBoardListener(){
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
-        this.node.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
+        this.node.parent.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
     }
 
     onMouseDown(event){
