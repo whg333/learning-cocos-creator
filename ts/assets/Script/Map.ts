@@ -38,9 +38,13 @@ export default class Map extends cc.Component {
 
         this.toMapPos({x:26,y:323});
         this.toMapPos({x:332,y:323});
+
         this.toGLPos({x:0,y:0});
         this.toGLPos({x:0,y:1});
         this.toGLPos({x:1,y:0});
+        this.toGLPos({x:1,y:1});
+
+        this.toMapPos({x:320,y:336});
 
         //更新player位置
         //this.updatePlayerPos();
@@ -59,7 +63,7 @@ export default class Map extends cc.Component {
 
     //地图坐标转GL
     toGLPos(mapPos: { x: number, y: number }): cc.Vec2 {
-        console.log('posInPixel=', mapPos.x, ', ', mapPos.y);
+        console.log('mapPos=', mapPos.x, ', ', mapPos.y);
         let mapSize = this.node.getContentSize();
         let tilesize = this.tiledMap.getTileSize();
         let x: number = mapSize.width / 2 + (mapPos.x - mapPos.y) * tilesize.width / 2;
@@ -68,12 +72,12 @@ export default class Map extends cc.Component {
         return cc.v2(x, y);
     }
     //GL转地图坐标
-    toMapPos(posInPixel: { x: number, y: number }): cc.Vec2 {
-        console.log('posInPixel=', posInPixel.x, ', ', posInPixel.y);
+    toMapPos(glPos: { x: number, y: number }): cc.Vec2 {
+        console.log('glPos=', glPos.x, ', ', glPos.y);
         let mapSize = this.node.getContentSize();
         let tilesize = this.tiledMap.getTileSize();
-        let x: number = Math.floor((posInPixel.x - mapSize.width / 2) / tilesize.width + (mapSize.height - posInPixel.y) / tilesize.height);
-        let y: number = Math.floor((mapSize.height - posInPixel.y) / tilesize.height - (posInPixel.x - mapSize.width / 2) / tilesize.width);
+        let x: number = Math.floor((glPos.x - mapSize.width / 2) / tilesize.width + (mapSize.height - glPos.y) / tilesize.height);
+        let y: number = Math.floor((mapSize.height - glPos.y) / tilesize.height - (glPos.x - mapSize.width / 2) / tilesize.width);
         console.log('toMapPos=', x, y);
         return cc.v2(x, y);
     }
@@ -84,13 +88,16 @@ export default class Map extends cc.Component {
     }
 
     onMouseDown(event){
-        console.log('mouse down ('+ event._x+', '+event._y+')');
+        //console.log('mouse down ('+ event._x+', '+event._y+')');
         let localtion = event.getLocation();
-        console.log('localtion='+localtion);
-        let startLocation = this.node.convertToNodeSpaceAR(localtion);
-        console.log('startLocation='+startLocation);
+        console.log('Localtion='+localtion);
+        let nodeLocation = this.node.convertToNodeSpaceAR(localtion);
+        console.log('NodeSpaceAR Location='+nodeLocation);
         this.getTilePos({x:event._x, y:event._y});
         this.toMapPos({x:event._x, y:event._y});
+
+        this.getTilePos({x:localtion.x, y:localtion.y});
+        this.toMapPos({x:nodeLocation.x, y:nodeLocation.y});
     }
 
     onKeyDown (event) {
