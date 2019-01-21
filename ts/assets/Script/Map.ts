@@ -1,14 +1,14 @@
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class Map extends cc.Component {
+export class Map extends cc.Component {
 
     // LIFE-CYCLE CALLBACKS:
 
     onLoad () {
         console.log('onLoad...');
         this.loadMap();
-        this.addKeyBoardListener();
+        this.addOperateListener();
     }
 
     loadMap () {
@@ -17,46 +17,64 @@ export default class Map extends cc.Component {
         //地图
         this.tiledMap = this.node.getComponent(cc.TiledMap);
         //players对象层
-        var players = this.tiledMap.getObjectGroup('players');
+        let players = this.tiledMap.getObjectGroup('players');
         this.player = this.node.getChildByName('player');
         this.cocos = this.node.getChildByName('cocos');
         //startPoint和endPoint对象
-        var startPoint = players.getObject('begin');
-        var endPoint = players.getObject('end');
+        let startPoint = players.getObject('begin');
+        let endPoint = players.getObject('end');
         //像素坐标
-        var startPos = cc.v2(startPoint.x, startPoint.y);
+        let startPos = cc.v2(startPoint.offset.x, startPoint.offset.y);
+        //let startNodePos = this.node.convertToNodeSpaceAR(startPos);
         console.log('star pos = '+startPos);
-        var endPos = cc.v2(endPoint.x, endPoint.y);
+        //this.getTilePos(startPos);
+        //console.log('star node pos = '+startNodePos);
+        let endPos = cc.v2(endPoint.offset.x, endPoint.offset.y);
+        //let endNodePos = this.node.convertToNodeSpaceAR(endPos);
         console.log('end pos = '+endPos);
+        //this.getTilePos(endPos);
+        //console.log('end node pos = '+endNodePos);
         //障碍物图层和星星图层
         this.decorates = this.tiledMap.getLayer('decorates');
         this.golds = this.tiledMap.getLayer('golds');
         //出生Tile和结束Tile
-        this.playerTile = this.startTile = this.toMapPos(startPos);
-        this.endTile = this.toMapPos(endPos);
+        this.playerTile = this.startTile = this.objMapPos(startPoint);
+        this.endTile = this.objMapPos(endPoint);
         this.cocos.setPosition(this.decorates.getPositionAt(this.endTile));
 
-        this.toMapPos({x:26,y:323});
-        this.toMapPos({x:332,y:323});
-
-        this.toGLPos({x:0,y:0});
-        this.toGLPos({x:0,y:1});
-        this.toGLPos({x:1,y:0});
-        this.toGLPos({x:1,y:1});
-
-        this.toMapPos({x:320,y:336});
+        // this.toMapPos({x:26,y:323});
+        // this.toMapPos({x:332,y:323});
+        //
+        // this.toGLPos({x:0,y:0});
+        // this.toGLPos({x:0,y:1});
+        // this.toGLPos({x:1,y:0});
+        // this.toGLPos({x:1,y:1});
+        //
+        // this.toMapPos({x:320,y:336});
 
         //更新player位置
-        //this.updatePlayerPos();
+        this.updatePlayerPos();
     }
 
-    //将像素坐标转化为瓦片坐标
+    //将tileMap对象层的对象属性坐标转换成地图索引坐标
+    objMapPos(mapObj){
+        console.log('objPos=', mapObj.offset.x, ', ', mapObj.offset.y);
+        //let mapSize = this.node.getContentSize();
+        let tileSize = this.tiledMap.getTileSize();
+        let side = Math.sqrt(Math.pow(tileSize.width/2, 2)+Math.pow(tileSize.height/2, 2))
+        let x = Math.floor((mapObj.offset.x)/side);
+        let y = Math.floor((mapObj.offset.y)/side);
+        console.log(x, y);
+        return cc.v2(x, y);
+    }
+
+    //将像素坐标转化为90度瓦片坐标
     getTilePos(posInPixel) {
         console.log('posInPixel=', posInPixel.x, ', ', posInPixel.y);
-        var mapSize = this.node.getContentSize();
-        var tileSize = this.tiledMap.getTileSize();
-        var x = Math.floor(posInPixel.x / tileSize.width);
-        var y = Math.floor((mapSize.height - posInPixel.y) / tileSize.height);
+        let mapSize = this.node.getContentSize();
+        let tileSize = this.tiledMap.getTileSize();
+        let x = Math.floor(posInPixel.x / tileSize.width);
+        let y = Math.floor((mapSize.height - posInPixel.y) / tileSize.height);
         console.log(x, y);
         return cc.v2(x, y);
     }
@@ -82,9 +100,9 @@ export default class Map extends cc.Component {
         return cc.v2(x, y);
     }
 
-    addKeyBoardListener(){
-        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
+    addOperateListener(){
         this.node.parent.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
+        cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
     }
 
     onMouseDown(event){
@@ -93,16 +111,14 @@ export default class Map extends cc.Component {
         console.log('Localtion='+localtion);
         let nodeLocation = this.node.convertToNodeSpaceAR(localtion);
         console.log('NodeSpaceAR Location='+nodeLocation);
-        this.getTilePos({x:event._x, y:event._y});
-        this.toMapPos({x:event._x, y:event._y});
 
         this.getTilePos({x:localtion.x, y:localtion.y});
         this.toMapPos({x:nodeLocation.x, y:nodeLocation.y});
     }
 
     onKeyDown (event) {
-        var newTile = cc.v2(this.playerTile.x, this.playerTile.y);
-        var macro = cc.macro;
+        let newTile = cc.v2(this.playerTile.x, this.playerTile.y);
+        let macro = cc.macro;
         switch(event.keyCode) {
             case macro.KEY.w:
             case cc.macro.KEY.up:
@@ -127,7 +143,7 @@ export default class Map extends cc.Component {
     }
 
     tryMoveToNewTile(newTile) {
-        var mapSize = this.tiledMap.getMapSize();
+        let mapSize = this.tiledMap.getMapSize();
         if (newTile.x < 0 || newTile.x >= mapSize.width) {
             cc.log('x outside');
             return false;
@@ -154,8 +170,8 @@ export default class Map extends cc.Component {
     }
 
     tryCatchStar(newTile){
-        var GID = this.golds.getTileGIDAt(newTile);
-        var prop = this.tiledMap.getPropertiesForGID(GID);
+        let GID = this.golds.getTileGIDAt(newTile);
+        let prop = this.tiledMap.getPropertiesForGID(GID);
         if(prop && prop.isGold) {
             //this.golds.removeTileAt(newTile);
             this.golds.setTileGIDAt(0, newTile);
@@ -163,7 +179,7 @@ export default class Map extends cc.Component {
     }
 
     updatePlayerPos() {
-        var pos = this.decorates.getPositionAt(this.playerTile);
+        let pos = this.decorates.getPositionAt(this.playerTile);
         console.log('update pos='+pos);
         this.player.setPosition(pos);
     }
@@ -174,5 +190,19 @@ export default class Map extends cc.Component {
 
     update (dt) {
         //console.log('update...', dt);
+    }
+}
+
+class MapData{
+    constructor(tiledMap:cc.Component){
+        this.tileMap = tiledMap;
+    }
+    getTileSize(){
+        return this.tiledMap.getTileSize();
+    }
+    getMapSize(){
+        let mapSize = this.tileMap.getMapSize();
+        let tileSize = this.getTileSize();
+        return {width:mapSize.width * tileSize.width, height:mapSize.height * tileSize.height};
     }
 }

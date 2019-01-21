@@ -55,6 +55,6 @@
  </layer>
  <objectgroup name="players">
   <object id="1" name="end" gid="7" x="332.2" y="323.8" width="56" height="56"/>
-  <object id="4" name="begin" gid="7" x="26.95" y="323.05" width="56" height="56"/>
+  <object id="4" name="begin" gid="7" x="36.45" y="17.55" width="56" height="56"/>
  </objectgroup>
 </map>
