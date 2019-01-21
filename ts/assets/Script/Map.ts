@@ -121,10 +121,23 @@ export class Map extends cc.Component {
         let path = this.mapInfo.search(this.playerTile, destTile);
         if(path.length > 0){
             console.log(path);
+            this.runPath(path);
         }
     }
 
-
+    runPath(path: Array){
+        let intervalId = setInterval(() => {
+            if(path.length <= 0){
+                clearInterval(intervalId);
+            }else{
+                let newTile = cc.v2(this.playerTile.x, this.playerTile.y);
+                let pathGrid = path.shift();
+                newTile.x = pathGrid.x;
+                newTile.y = pathGrid.y;
+                this.tryMoveToNewTile(newTile);
+            }
+        },200);
+    }
 
     onKeyDown (event) {
         let newTile = cc.v2(this.playerTile.x, this.playerTile.y);
