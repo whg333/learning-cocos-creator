@@ -1,3 +1,5 @@
+import { astar,Graph } from 'Astar';
+
 const {ccclass, property} = cc._decorator;
 
 @ccclass
@@ -16,6 +18,8 @@ export class Map extends cc.Component {
         //this.node.setPosition(cc.visibleRect.bottomLeft);
         //地图
         this.tiledMap = this.node.getComponent(cc.TiledMap);
+        this.mapInfo = new MapInfo(this.tiledMap);
+
         //players对象层
         let players = this.tiledMap.getObjectGroup('players');
         this.player = this.node.getChildByName('player');
@@ -80,7 +84,7 @@ export class Map extends cc.Component {
     }
 
     //地图坐标转GL
-    toGLPos(mapPos: { x: number, y: number }): cc.Vec2 {
+    toGLPos(mapPos: Location): cc.Vec2 {
         console.log('mapPos=', mapPos.x, ', ', mapPos.y);
         let mapSize = this.node.getContentSize();
         let tilesize = this.tiledMap.getTileSize();
@@ -90,7 +94,7 @@ export class Map extends cc.Component {
         return cc.v2(x, y);
     }
     //GL转地图坐标
-    toMapPos(glPos: { x: number, y: number }): cc.Vec2 {
+    toMapPos(glPos: Location): cc.Vec2 {
         console.log('glPos=', glPos.x, ', ', glPos.y);
         let mapSize = this.node.getContentSize();
         let tilesize = this.tiledMap.getTileSize();
@@ -112,9 +116,15 @@ export class Map extends cc.Component {
         let nodeLocation = this.node.convertToNodeSpaceAR(localtion);
         console.log('NodeSpaceAR Location='+nodeLocation);
 
-        this.getTilePos({x:localtion.x, y:localtion.y});
-        this.toMapPos({x:nodeLocation.x, y:nodeLocation.y});
+        //this.getTilePos({x:localtion.x, y:localtion.y});
+        let destTile = this.toMapPos(nodeLocation);
+        let path = this.mapInfo.search(this.playerTile, destTile);
+        if(path.length > 0){
+            console.log(path);
+        }
     }
+
+
 
     onKeyDown (event) {
         let newTile = cc.v2(this.playerTile.x, this.playerTile.y);
@@ -181,6 +191,7 @@ export class Map extends cc.Component {
     updatePlayerPos() {
         let pos = this.decorates.getPositionAt(this.playerTile);
         console.log('update pos='+pos);
+        //this.player.zIndex = this.playerTile.x + this.playerTile.y;
         this.player.setPosition(pos);
     }
 
@@ -193,16 +204,78 @@ export class Map extends cc.Component {
     }
 }
 
-class MapData{
+class MapInfo{
+
+    tiledMap:cc.Component = null;
+    data:Array<Array<number>> = null;
+    decorates:cc.TiledLayer = null;
+    graph: Graph = null;
+
     constructor(tiledMap:cc.Component){
-        this.tileMap = tiledMap;
+        this.tiledMap = tiledMap;
+        this.init();
+    }
+    init(){
+        this.initData();
+        this.fillData();
+    }
+    initData(){
+        let mapSize = this.getMapSize();
+        this.data = new Array<Array<number>>(mapSize.width);
+        for(let i=0;i<mapSize.width;i++){
+            this.data[i] = new Array<number>(mapSize.height);
+            for(let j=0;j<mapSize.height;j++){
+                this.data[i][j] = 1;
+            }
+        }
+
+        this.decorates = this.getLayer('decorates');
+        let layerSize = this.decorates.getLayerSize();
+        //let mapTileSize = this.decorates.getMapTileSize();
+        for(let i=0;i<layerSize.width;i++){
+            for(let j=0;j<layerSize.height;j++){
+                let gid = this.decorates.getTileGIDAt(i, j);
+                if(gid <= 0){
+                    continue;
+                }
+                this.data[i][j] = 0;
+            }
+        }
+    }
+    fillData(){
+        this.graph = new Graph(this.data);
+        /*
+        let path = this.search({x:0,y:0}, {x:2,y:3});
+        cc.log(path);
+        if(path.length > 0){
+
+        }
+        */
+    }
+    search(from:Location, to:Location){
+        let start = this.graph.grid[from.x][from.y];
+        let end = this.graph.grid[to.x][to.y];
+        let path = astar.search(this.graph, start, end);
+        cc.log(path);
+        return path;
     }
     getTileSize(){
         return this.tiledMap.getTileSize();
     }
     getMapSize(){
-        let mapSize = this.tileMap.getMapSize();
+        return this.tiledMap.getMapSize();
+    }
+    getContentSize(){
+        let mapSize = this.getMapSize();
         let tileSize = this.getTileSize();
         return {width:mapSize.width * tileSize.width, height:mapSize.height * tileSize.height};
     }
+    getLayer(layerName:string){
+        return this.tiledMap.getLayer(layerName);
+    }
+}
+
+interface Location{
+    x:number;
+    y:number;
 }
