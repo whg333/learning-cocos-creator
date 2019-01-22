@@ -2,12 +2,12 @@ import {astar, Graph, GridNode} from "./Astar";
 
 export class MapInfo {
 
-    tiledMap: cc.TiledMap = null;
-    contentSize: cc.Size = null;
+    tiledMap: cc.TiledMap;
+    contentSize: cc.Size;
 
-    data: Array<Array<number>> = null;
-    decorates: cc.TiledLayer = null;
-    graph: Graph = null;
+    data: Array<Array<number>>;
+    decorates: cc.TiledLayer;
+    graph: Graph;
 
     constructor(tiledMap: cc.TiledMap) {
         this.tiledMap = tiledMap;
