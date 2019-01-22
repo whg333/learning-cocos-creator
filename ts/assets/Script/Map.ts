@@ -95,6 +95,7 @@ export class Map extends cc.Component {
         if (this.running) {
             return;
         }
+
         let destTile = this.mapInfo.toMapPos(nodeLocation);
         let path = this.mapInfo.search(this.playerTile, destTile);
         if (path.length > 0) {
@@ -120,6 +121,10 @@ export class Map extends cc.Component {
     }
 
     onKeyDown(event) {
+        if (this.running) {
+            return;
+        }
+
         let newTile = cc.v2(this.playerTile.x, this.playerTile.y);
         let macro = cc.macro;
         switch (event.keyCode) {
