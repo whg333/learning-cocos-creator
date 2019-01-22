@@ -105,7 +105,7 @@ export class Map extends cc.Component {
     }
 
     addOperateListener(){
-        this.node.parent.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
+        this.node.on(cc.Node.EventType.MOUSE_DOWN, this.onMouseDown, this);
         cc.systemEvent.on(cc.SystemEvent.EventType.KEY_DOWN, this.onKeyDown, this);
     }
 
@@ -117,6 +117,9 @@ export class Map extends cc.Component {
         console.log('NodeSpaceAR Location='+nodeLocation);
 
         //this.getTilePos({x:localtion.x, y:localtion.y});
+        if(this.running){
+            return;
+        }
         let destTile = this.toMapPos(nodeLocation);
         let path = this.mapInfo.search(this.playerTile, destTile);
         if(path.length > 0){
@@ -126,9 +129,11 @@ export class Map extends cc.Component {
     }
 
     runPath(path: Array){
+        this.running = true;
         let intervalId = setInterval(() => {
             if(path.length <= 0){
                 clearInterval(intervalId);
+                this.running = false;
             }else{
                 let newTile = cc.v2(this.playerTile.x, this.playerTile.y);
                 let pathGrid = path.shift();
@@ -203,7 +208,7 @@ export class Map extends cc.Component {
 
     updatePlayerPos() {
         let pos = this.decorates.getPositionAt(this.playerTile);
-        console.log('update pos='+pos);
+        //console.log('update pos='+pos);
         //this.player.zIndex = this.playerTile.x + this.playerTile.y;
         this.player.setPosition(pos);
     }
@@ -230,7 +235,6 @@ class MapInfo{
     }
     init(){
         this.initData();
-        this.fillData();
     }
     initData(){
         let mapSize = this.getMapSize();
@@ -254,23 +258,16 @@ class MapInfo{
                 this.data[i][j] = 0;
             }
         }
-    }
-    fillData(){
-        this.graph = new Graph(this.data);
-        /*
-        let path = this.search({x:0,y:0}, {x:2,y:3});
-        cc.log(path);
-        if(path.length > 0){
 
-        }
-        */
+        this.graph = new Graph(this.data);
     }
     search(from:Location, to:Location){
         let start = this.graph.grid[from.x][from.y];
-        let end = this.graph.grid[to.x][to.y];
-        let path = astar.search(this.graph, start, end);
-        cc.log(path);
-        return path;
+        let end = null;
+        if(!this.graph.grid[to.x] || !(end = this.graph.grid[to.x][to.y])){
+            return [];
+        }
+        return astar.search(this.graph, start, end);
     }
     getTileSize(){
         return this.tiledMap.getTileSize();
