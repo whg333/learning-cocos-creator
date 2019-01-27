@@ -12,14 +12,15 @@ export default class Player extends cc.Component {
     @property
     accel: number = 350;
 
+    @property(cc.AudioClip)
+    jumpAudio: cc.AudioClip = null;
+
     private jumpAction: cc.ActionInterval;
 
     private left: boolean;
     private right: boolean;
 
     private xSpeed: number = 0;
-
-    // LIFE-CYCLE CALLBACKS:
 
     onLoad() {
         this.startJump();
@@ -34,7 +35,12 @@ export default class Player extends cc.Component {
     getJumpAction(): cc.ActionInterval {
         let jumpUp: cc.ActionInterval = cc.moveBy(this.jumpDuration, cc.v2(0, this.jumpHeight)).easing(cc.easeCubicActionOut());
         let jumpDown: cc.ActionInterval = cc.moveBy(this.jumpDuration, cc.v2(0, -this.jumpHeight)).easing(cc.easeCubicActionIn());
-        return cc.repeatForever(cc.sequence(jumpUp, jumpDown));
+        let callback = cc.callFunc(this.playJumpSound, this);
+        return cc.repeatForever(cc.sequence(jumpUp, jumpDown, callback));
+    }
+
+    playJumpSound(){
+        cc.audioEngine.playEffect(this.jumpAudio, false);
     }
 
     addKeyListener() {
