@@ -19,7 +19,9 @@ export default class Game extends cc.Component {
     @property(cc.Label)
     scoreLabel: cc.Label = null;
 
-    @property(cc.AudioClip)
+    @property({
+        type: cc.AudioClip
+    })
     scoreAudio: cc.AudioClip = null;
 
     private score: number = 0;

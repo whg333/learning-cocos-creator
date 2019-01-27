@@ -12,7 +12,9 @@ export default class Player extends cc.Component {
     @property
     accel: number = 350;
 
-    @property(cc.AudioClip)
+    @property({
+        type: cc.AudioClip
+    })
     jumpAudio: cc.AudioClip = null;
 
     private jumpAction: cc.ActionInterval;
