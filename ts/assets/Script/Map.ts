@@ -38,7 +38,7 @@ export class Map extends cc.Component {
 
         //players对象层
         let players = this.mapInfo.getObjectGroup('players');
-        this.player = this.node.getChildByName('player');
+        this.player = this.node.getChildByName('alien');
         this.cocos = this.node.getChildByName('cocos');
 
         //startPoint和endPoint对象
@@ -105,19 +105,39 @@ export class Map extends cc.Component {
     }
 
     runPath(path: Array<GridNode>) {
+        if(path.length <= 0){
+            return;
+        }
+
         this.running = true;
-        let intervalId = setInterval(() => {
-            if (path.length <= 0) {
-                clearInterval(intervalId);
-                this.running = false;
-            } else {
-                let newTile = cc.v2(this.playerTile.x, this.playerTile.y);
-                let pathGrid = path.shift();
-                newTile.x = pathGrid.x;
-                newTile.y = pathGrid.y;
-                this.tryMoveToNewTile(newTile);
-            }
-        }, 200);
+
+        let moveActions = new Array<cc.ActionInstant>();
+        path.forEach((data, index, array) => {
+            let pathPos = this.decorates.getPositionAt(cc.v2(data.x, data.y));
+            moveActions.push(cc.moveTo(1, pathPos));
+            moveActions.push(cc.callFunc(() =>{
+                this.player.setPosition(pathPos);
+            }, this));
+        });
+
+        moveActions.push(cc.callFunc(() =>{
+            this.running = false;
+        }, this));
+
+        this.player.runAction(cc.sequence(moveActions));
+
+        // let intervalId = setInterval(() => {
+        //     if (path.length <= 0) {
+        //         clearInterval(intervalId);
+        //         this.running = false;
+        //     } else {
+        //         let pathTile = path.shift();
+        //         let newTile = cc.v2(pathTile.x, pathTile.y);
+        //         //this.tryMoveToNewTile(newTile);
+        //         //this.player.movePath(newTile);
+        //         this.player.runAction(cc.moveTo(2, this.mapInfo.toGLPos(newTile)));
+        //     }
+        // }, 200);
     }
 
     onKeyDown(event) {
@@ -188,7 +208,7 @@ export class Map extends cc.Component {
 
     updatePlayerPos() {
         let pos = this.decorates.getPositionAt(this.playerTile);
-        //console.log('update pos='+pos);
+        console.log('update player pos='+pos);
         //this.player.zIndex = this.playerTile.x + this.playerTile.y;
         this.player.setPosition(pos);
     }
