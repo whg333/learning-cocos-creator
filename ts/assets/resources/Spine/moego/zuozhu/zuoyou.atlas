@@ -1,0 +1,62 @@
+
+zuoyou.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bgb
+  rotate: false
+  xy: 286, 106
+  size: 30, 20
+  orig: 30, 20
+  offset: 0, 0
+  index: -1
+cvbfg
+  rotate: false
+  xy: 260, 88
+  size: 24, 38
+  orig: 24, 38
+  offset: 0, 0
+  index: -1
+cxvbfg
+  rotate: false
+  xy: 221, 2
+  size: 20, 36
+  orig: 20, 36
+  offset: 0, 0
+  index: -1
+diying
+  rotate: false
+  xy: 119, 23
+  size: 100, 103
+  orig: 100, 103
+  offset: 0, 0
+  index: -1
+sdfv
+  rotate: false
+  xy: 221, 84
+  size: 37, 42
+  orig: 37, 42
+  offset: 0, 0
+  index: -1
+sfd
+  rotate: false
+  xy: 221, 40
+  size: 24, 42
+  orig: 24, 42
+  offset: 0, 0
+  index: -1
+wfv
+  rotate: true
+  xy: 119, 2
+  size: 19, 41
+  orig: 19, 41
+  offset: 0, 0
+  index: -1
+xcvb
+  rotate: false
+  xy: 2, 11
+  size: 115, 115
+  orig: 115, 115
+  offset: 0, 0
+  index: -1

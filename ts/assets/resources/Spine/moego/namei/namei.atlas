@@ -1,0 +1,62 @@
+
+namei.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+diying
+  rotate: false
+  xy: 1027, 352
+  size: 100, 103
+  orig: 100, 103
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: false
+  xy: 2, 2
+  size: 176, 243
+  orig: 176, 243
+  offset: 0, 0
+  index: -1
+tou
+  rotate: true
+  xy: 2, 247
+  size: 714, 1023
+  orig: 714, 1023
+  offset: 0, 0
+  index: -1
+yao
+  rotate: false
+  xy: 326, 133
+  size: 186, 112
+  orig: 186, 112
+  offset: 0, 0
+  index: -1
+youbi
+  rotate: false
+  xy: 180, 6
+  size: 144, 239
+  orig: 144, 239
+  offset: 0, 0
+  index: -1
+youtui
+  rotate: false
+  xy: 1169, 736
+  size: 90, 225
+  orig: 90, 225
+  offset: 0, 0
+  index: -1
+zuobi
+  rotate: false
+  xy: 1027, 696
+  size: 140, 265
+  orig: 140, 265
+  offset: 0, 0
+  index: -1
+zuotui
+  rotate: false
+  xy: 1027, 457
+  size: 107, 237
+  orig: 107, 237
+  offset: 0, 0
+  index: -1

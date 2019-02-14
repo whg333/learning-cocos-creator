@@ -13,7 +13,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "alien-ess",
+    "_name": "mingren",
     "_objFlags": 0,
     "_parent": null,
     "_children": [
@@ -44,8 +44,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 365.79,
-      "height": 391.51
+      "width": 107.02,
+      "height": 168.38
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -54,14 +54,14 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 94,
-      "y": 176.2,
+      "x": 185,
+      "y": 412,
       "z": 0
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.15,
-      "y": 0.15,
+      "x": 0.48,
+      "y": 0.48,
       "z": 1
     },
     "_quat": {
@@ -116,14 +116,14 @@
     },
     "_position": {
       "__type__": "cc.Vec3",
-      "x": 20.3,
-      "y": 429.5,
+      "x": 7.3,
+      "y": 177.7,
       "z": 0
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1.93,
-      "y": 1.93,
+      "x": 1,
+      "y": 1,
       "z": 1
     },
     "_quat": {
@@ -173,9 +173,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "514f639d-9b6a-4a92-bba6-7abd46881990"
+      "__uuid__": "44ee1ee2-3d00-4dba-898b-2f849ff333b9"
     },
-    "fileId": "0cwCuw4VxC8LAI7a3fA8Ue",
+    "fileId": "670Aaf13pAxLc30ex12t78",
     "sync": false
   },
   {
@@ -195,7 +195,7 @@
     "premultipliedAlpha": true,
     "timeScale": 1,
     "_N$skeletonData": {
-      "__uuid__": "d2132f15-c6ec-4ff8-b439-6ff6a71074a8"
+      "__uuid__": "56e4aa26-9e56-4f4f-bb1f-eb87abc96678"
     },
     "_N$debugSlots": false,
     "_N$debugBones": false,
@@ -212,9 +212,9 @@
     "nameLabel": {
       "__id__": 3
     },
-    "url": "Spine/alien/alien-ess",
-    "roleName": "异形",
-    "actionName": "run",
+    "url": "Spine/moego/mingren/mingren",
+    "roleName": "鸣人",
+    "actionName": "animation",
     "_id": ""
   },
   {
@@ -223,9 +223,9 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "514f639d-9b6a-4a92-bba6-7abd46881990"
+      "__uuid__": "44ee1ee2-3d00-4dba-898b-2f849ff333b9"
     },
-    "fileId": "d1aEtTCaJOQov8aFf5rp/P",
+    "fileId": "f3hXVqFndF9baF0+TzIxpU",
     "sync": false
   }
 ]

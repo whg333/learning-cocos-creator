@@ -38,7 +38,7 @@ export class Map extends cc.Component {
 
         //players对象层
         let players = this.mapInfo.getObjectGroup('players');
-        this.player = this.node.getChildByName('alien');
+        this.player = this.node.getChildByName('mingren');
         this.cocos = this.node.getChildByName('cocos');
 
         //startPoint和endPoint对象

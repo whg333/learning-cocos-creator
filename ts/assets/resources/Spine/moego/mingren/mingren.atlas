@@ -1,0 +1,62 @@
+
+mingren.png
+size: 512,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bac
+  rotate: false
+  xy: 213, 66
+  size: 30, 39
+  orig: 30, 39
+  offset: 0, 0
+  index: -1
+bnhng
+  rotate: false
+  xy: 273, 69
+  size: 22, 36
+  orig: 22, 36
+  offset: 0, 0
+  index: -1
+diying
+  rotate: false
+  xy: 111, 2
+  size: 100, 103
+  orig: 100, 103
+  offset: 0, 0
+  index: -1
+nhg
+  rotate: false
+  xy: 213, 23
+  size: 26, 41
+  orig: 26, 41
+  offset: 0, 0
+  index: -1
+qeac
+  rotate: true
+  xy: 297, 85
+  size: 20, 37
+  orig: 20, 37
+  offset: 0, 0
+  index: -1
+vdd
+  rotate: false
+  xy: 245, 67
+  size: 26, 38
+  orig: 26, 38
+  offset: 0, 0
+  index: -1
+xcva
+  rotate: false
+  xy: 2, 2
+  size: 107, 103
+  orig: 107, 103
+  offset: 0, 0
+  index: -1
+xxaa
+  rotate: false
+  xy: 336, 84
+  size: 31, 21
+  orig: 31, 21
+  offset: 0, 0
+  index: -1
